@@ -1,0 +1,32 @@
+{
+  "name": "target-repo",
+  "version": "0.1.0",
+  "description": "Reference target codebase for the autonomy agentic SDLC pipeline.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "nock": "^13.5.4",
+    "supertest": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "routes/**/*.js",
+      "services/**/*.js",
+      "featureFlags.js"
+    ]
+  }
+}
