@@ -39,3 +39,37 @@ describe("GET /api/slack/ping", () => {
     expect(res.body.ok).toBe(true);
   });
 });
+
+describe("GET /api/ping", () => {
+  it("returns 200 with body pong:true", async () => {
+    const res = await request(app).get("/api/ping");
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ pong: true });
+  });
+
+  it("has Content-Type application/json header", async () => {
+    const res = await request(app).get("/api/ping");
+    expect(res.headers["content-type"]).toContain("application/json");
+  });
+
+  it("responds in under 100ms", async () => {
+    const startTime = Date.now();
+    const res = await request(app).get("/api/ping");
+    const responseTime = Date.now() - startTime;
+    expect(res.status).toBe(200);
+    expect(responseTime).toBeLessThan(100);
+  });
+
+  it("does not break the status endpoint", async () => {
+    const res = await request(app).get("/api/status");
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ status: "healthy" });
+  });
+
+  it("does not break the slack ping endpoint", async () => {
+    delete process.env.SLACK_PING_ENABLED;
+    const res = await request(app).get("/api/slack/ping");
+    expect(res.status).toBe(200);
+    expect(res.body.ok).toBe(true);
+  });
+});

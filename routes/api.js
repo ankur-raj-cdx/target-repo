@@ -32,4 +32,8 @@ router.get("/slack/ping", async (_req, res) => {
   }
 });
 
+router.get("/ping", (_req, res) => {
+  res.status(200).json({ pong: true });
+});
+
 module.exports = router;
