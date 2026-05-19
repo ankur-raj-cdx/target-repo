@@ -73,3 +73,29 @@ describe("GET /api/ping", () => {
     expect(res.body.ok).toBe(true);
   });
 });
+
+describe("GET /api/yin", () => {
+  it("returns 200 with body yang:true", async () => {
+    const res = await request(app).get("/api/yin");
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ yang: true });
+  });
+
+  it("has Content-Type application/json header", async () => {
+    const res = await request(app).get("/api/yin");
+    expect(res.headers["content-type"]).toContain("application/json");
+  });
+
+  it("response body structure is exactly yang:true with no additional fields", async () => {
+    const res = await request(app).get("/api/yin");
+    expect(res.status).toBe(200);
+    expect(Object.keys(res.body)).toEqual(["yang"]);
+    expect(res.body.yang).toBe(true);
+  });
+
+  it("does not break the status endpoint", async () => {
+    const res = await request(app).get("/api/status");
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ status: "healthy" });
+  });
+});

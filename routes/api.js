@@ -36,4 +36,8 @@ router.get("/ping", (_req, res) => {
   res.status(200).json({ pong: true });
 });
 
+router.get("/yin", (_req, res) => {
+  res.status(200).json({ yang: true });
+});
+
 module.exports = router;
