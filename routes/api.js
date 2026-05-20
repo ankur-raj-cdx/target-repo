@@ -36,4 +36,8 @@ router.get("/ping", (_req, res) => {
   res.status(200).json({ pong: true });
 });
 
+router.get("/piing", (_req, res) => {
+  res.status(200).json({ pongg: true });
+});
+
 module.exports = router;
