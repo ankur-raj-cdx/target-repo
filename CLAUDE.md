@@ -38,6 +38,7 @@ backed by external services (Slack, etc.). It's our reference target for the
 | GET    | `/api/status`    | none | Health check — must always return 200             |
 | POST   | `/api/echo`      | none | Echoes the JSON body back (for smoke tests)       |
 | GET    | `/api/slack/ping`| none | Posts a ping to the configured Slack channel      |
+| GET    | `/api/hello`     | none | Demo endpoint returning hello message              |
 
 ## Services
 
