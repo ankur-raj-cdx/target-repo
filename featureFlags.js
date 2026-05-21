@@ -21,4 +21,5 @@ function flag(name) {
 
 module.exports = {
   slackPingEnabled: flag("SLACK_PING"),
+  primeSumEnabled: flag("PRIME_SUM"), // Requires env var: PRIME_SUM_ENABLED
 };

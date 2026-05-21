@@ -8,6 +8,8 @@
  */
 const express = require("express");
 const slackService = require("../services/slackService");
+const primeService = require("../services/primeService");
+const flags = require("../featureFlags");
 
 const router = express.Router();
 
@@ -29,6 +31,20 @@ router.get("/slack/ping", async (_req, res) => {
   } catch (err) {
     console.error("slack ping failed", err);
     return res.status(200).json({ ok: true, flagOff: true, reason: "slack_unavailable" });
+  }
+});
+
+router.get("/primes/sum", async (_req, res) => {
+  if (!flags.primeSumEnabled) {
+    return res.status(200).json({ ok: true, flagOff: true });
+  }
+
+  try {
+    const result = primeService.calculateSum();
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error("prime sum calculation failed", err);
+    return res.status(200).json({ ok: true, flagOff: true, reason: "calculation_error" });
   }
 });
 
