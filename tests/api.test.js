@@ -41,23 +41,28 @@ describe("GET /api/slack/ping", () => {
 });
 
 describe("GET /api/ping", () => {
-  it("returns 200 with body pong:true", async () => {
+  it("returns 200 with pong in plain text", async () => {
     const res = await request(app).get("/api/ping");
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ pong: true });
+    expect(res.text).toBe("pong");
   });
 
-  it("has Content-Type application/json header", async () => {
+  it("has Content-Type text/plain header", async () => {
     const res = await request(app).get("/api/ping");
-    expect(res.headers["content-type"]).toContain("application/json");
+    expect(res.headers["content-type"]).toBe("text/plain; charset=utf-8");
   });
 
-  it("responds in under 100ms", async () => {
+  it("responds in under 50ms", async () => {
     const startTime = Date.now();
     const res = await request(app).get("/api/ping");
     const responseTime = Date.now() - startTime;
     expect(res.status).toBe(200);
-    expect(responseTime).toBeLessThan(100);
+    expect(responseTime).toBeLessThan(50);
+  });
+
+  it("does not require authentication", async () => {
+    const res = await request(app).get("/api/ping");
+    expect(res.status).toBe(200);
   });
 
   it("does not break the status endpoint", async () => {
